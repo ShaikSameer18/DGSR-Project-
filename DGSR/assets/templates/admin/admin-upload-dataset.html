@@ -1,0 +1,406 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Solartec - Renewable Energy Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <style>
+    .custom-button {
+      color: rgb(22,211,236);
+      background-color: rgb(22,211,236);
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+    }
+  </style>
+</head>
+
+<body>
+ 
+    <!-- partial:./partials/_sidebar.html -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <script>swal({
+        title: "Success!",
+        text: "{{message}}",
+        icon: "success",
+        button: "OK",
+      });
+    </script>
+
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+    <script>swal({
+        title: "Warning :)",
+        text: "{{message}}",
+        icon: "warning",
+        button: "OK",
+
+      });
+    </script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+    <script>swal({
+        title: "info :)",
+        text: "{{message}}",
+        icon: "info",
+        button: "OK",
+      });
+    </script>
+    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <script>swal({
+        title: "error :)",
+        text: "{{message}}",
+        icon: "error",
+        button: "OK",
+      });
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <div class="container-scroller d-flex">
+      <!-- partial:./partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item sidebar-category">
+            <p>Navigation</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admindashboard' %}">
+              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item sidebar-category">
+            <p>Components</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">User Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'pendingusers' %}">Pending Users</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'manageusers' %}">All Users</a></li>
+              </ul>
+            </div>
+          </li>
+  
+  
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="mdi mdi-grid-large menu-icon"></i>
+              <span class="menu-title">Dataset</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"><a class="nav-link" href="{% url 'admin_datasetupload' %}"> Upload Dataset</a></li>
+              </ul>
+            </div>
+          </li>
+  
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#model" aria-expanded="false" aria-controls="model">
+              <i class="mdi mdi-animation"></i>
+              <span class="menu-title">Model</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="model">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'admintraintest' %}"> Generate Train & Test
+                    Model</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{% url 'RF_alg' %}"> Generate RF </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{% url 'DT_alg' %}"> Generate DT </a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{% url 'XGB_alg' %}"> Generate XGB </a></li>
+              </ul>
+            </div>
+  
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#graph" aria-expanded="false" aria-controls="graph">
+              <i class="mdi mdi-chart-bar"></i>
+              <span class="menu-title">Graph Analysis</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="graph">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'admingraph' %}">Accuracy Graph</a></li>
+              </ul>
+            </div>
+  
+          </li>
+  
+          <li class="nav-item sidebar-category">
+            <p>Pages</p>
+            <span></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#feed" aria-expanded="false" aria-controls="feed">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Feedback Management</span>
+              <i class="menu-arrow"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:./partials/_navbar.html -->
+      <nav class="navbar col-lg-12 col-12 px-0 py-0 py-lg-4 d-flex flex-row">
+        <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <div class="navbar-brand-wrapper">
+            <a class="navbar-brand brand-logo" href="{% url 'admindashboard' %}"><img
+                src="{% static 'admin/images/corona_icon.png' %}" alt="logo"  style="width: 90px; height: auto;" /></a>
+            <a class="navbar-brand brand-logo-mini" href="{% url 'admindashboard' %}"><img
+                src="{% static 'admin/images/corona_icon.png' %}" alt="logo"  style="width: 90px; height: auto;" /></a>
+          </div>
+          <h1 class="font-weight-bold mb-0 d-none d-md-block mt-1" style="color: black;">Welcome back, Admin</h1>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown mr-1">
+              <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center"
+                id="messageDropdown" href="#" data-toggle="dropdown">
+                <i class="mdi mdi-calendar mx-0"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                aria-labelledby="messageDropdown">
+                <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="{% static 'admin/images/faces/face4.jpg' %}" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal">David Grey
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      The meeting is cancelled
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="{% static 'admin/images/faces/face2.jpg' %}" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      New product launch
+                    </p>
+                  </div>
+                </a>
+                <a class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <img src="{% static 'admin/images/faces/face3.jpg' %}" alt="image" class="profile-pic">
+                  </div>
+                  <div class="preview-item-content flex-grow">
+                    <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
+                    </h6>
+                    <p class="font-weight-light small-text text-muted mb-0">
+                      Upcoming board meeting
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown mr-1">
+              <a class="dropdown-item" href="{% url 'adminlogout' %}" style="color: #ffffff;">
+                  <i class="mdi mdi-logout text-dark"></i>
+                  Logout
+              </a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+        <div class="navbar-menu-wrapper navbar-search-wrapper d-none d-lg-flex align-items-center">
+          <ul class="navbar-nav mr-lg-2">
+            <li class="nav-item nav-search d-none d-lg-block">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search Here..." aria-label="search"
+                  aria-describedby="search">
+              </div>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+                <img src="{% static 'admin/images/faces/face5.jpg' %}" alt="profile" />
+                <span class="nav-profile-name">Admin-account</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item">
+                  <i class="mdi mdi-settings text-primary"></i>
+                  Settings
+                </a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link icon-link">
+                <i class="mdi mdi-plus-circle-outline"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link icon-link">
+                <i class="mdi mdi-web"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link icon-link">
+                <i class="mdi mdi-clock-outline"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Page-header end -->
+      <div class="pcoded-content">
+        <!-- Page-header start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="row align-items-center">
+              <div class="col-md-12">
+                <div class="page-header-title d-flex justify-content-between">
+                  <h5 class="m-b-10">Upload Dataset</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Page-header end -->
+
+        <div class="row">
+          <div class="col-md-8 ">
+            <div class="card" style=" margin-top:150px; margin-left:350px;">
+              <div class="card-body">
+                <h5 class="card-title">Upload Dataset</h5>
+                <form method="post" action="{% url 'admin_dataset_btn' %}" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <label for="fileInput" class="form-label">Upload Your Dataset File (only .png and .jpg files
+                    accepted)</label>
+                  <div class="mb-3">
+                    <label for="fileInput" class="form-label">Choose file:</label>
+                    <input type="file" class="form-control" id="fileInput" webkitdirectory multiple />
+                  </div>
+                  <button type="submit" class="custom-button">Upload</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <br><br>
+  <!-- row end -->
+  <!-- content-wrapper ends -->
+      <!-- footer section start -->
+      <div class="footer_section">
+        <div class="container">
+           <div class="footer_sectio_2">
+              <div class="row">
+                 <div class="col-lg-4 col-md-4">
+                    <h2 class="useful_text">Quick Links</h2>
+                    <div class="footer_menu">
+                       <ul>
+                          <li class="active"><a href="{% static 'index.html' %}">Home</a></li>
+                          <li><a href="{% static 'about.html' %}">About</a></li>
+                          <li><a href="{% static 'service.html' %}">Services</a></li>
+                          <li><a href="{% static 'blog.html' %}">Blog</a></li>
+                          <li><a href="{% static 'testimonial.html' %}">Testimonial</a></li>
+                          <li><a href="{% static 'contact.html' %}">Contact Us</a></li>
+                       </ul>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-md-4">
+                  <h2 class="useful_text">About</h2>
+                  <p class="footer_text">Revanth Global Technologies offers training, internships, and final-year projects for students in fields such as B.E, B.Tech, M.E, M.Tech, M.C.A, M.B.A, and Ph.D.</p>
+                  <div class="social_icon">
+                       <ul>
+                          <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                       </ul>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-md-4">
+                  <h2 class="useful_text">Contact Us</h2>
+                  <ul class="top_infomation">
+                     <li style="color: white;"><i class="fa fa-map-marker" aria-hidden="true"></i>Pragati Engineering College ADB Road, Surampalem</li>
+                     <li style="color: white;"><i class="fa fa-phone" aria-hidden="true"></i> Call : +917207309629</li>
+                     <li style="color: white;">
+                         <i class="fa fa-envelope" aria-hidden="true"></i>
+                         <span style="margin-left: 5px; color: white;"><a href="mailto:safe@gmail.com" class="footer-link" style="color:white; ">sameeruddinshaik7866@gmail.com</a></span>
+                     </li>
+                 </ul>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+     <!-- footer section end -->
+     <!-- copyright section start -->
+     <div class="copyright_section">
+        <div class="container">
+           <p class="copyright_text"> All Rights Reserved. Design by <a href="https://html.design"></a> Distribution by <a href="https://themewagon.com"> Shaik Sameeruddin</a></p>
+        </div>
+     </div>
+     <!-- copyright section end -->
+     <!-- Javascript files-->
+     <script src="{% static 'js/jquery.min.js' %}"></script>
+     <script src="{% static 'js/popper.min.js' %}"></script>
+     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+     <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+     <script src="{% static 'js/plugin.js' %}"></script>
+     <!-- sidebar -->
+     <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+     <script src="{% static 'js/custom.js' %}"></script>
+ 
+</body>
+
+</html>
